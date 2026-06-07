@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milan Furniture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* css stuff */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --cream: #f5f0e8;
+            --warm-white: #faf8f4;
+            --charcoal: #1c1a17;
+            --mid: #6b6560;
+            --light: #c4bdb4;
+            --accent: #8b6f47;
+            --accent-light: #d4b896;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--warm-white);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        /* nav - mobile-first */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            z-index: 100;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 1.2rem 1.5rem;
+            background: rgba(250,248,244,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(196,189,180,0.3);
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            color: var(--charcoal);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        /* now for hamburger menu - visible on mobile */
+        .nav-toggle {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--charcoal);
+            display: block;
+        }
+
+        /* menu hidden by default on phone */
+        .nav-menu {
+            display: none;
+            width: 100%;
+            padding: 1rem 0;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* when menu is open, JS adds the class "open" */
+        .nav-menu.open {
+            display: flex;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--mid);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--charcoal); }
+
+        .nav-btn {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.7rem 1.4rem;
+            background: var(--charcoal);
+            color: var(--warm-white);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s;
+            align-self: flex-start;
+        }
+
+        .nav-btn:hover { background: var(--accent); }
+
+        /* for bigger screens now */
+        @media (min-width: 768px) {
+            nav {
+                padding: 1.5rem 3rem;
+                flex-wrap: nowrap;
+            }
+            .nav-toggle {
+                display: none;
+            }
+            .nav-menu {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                width: auto;
+                padding: 0;
+                gap: 2rem;
+            }
+            .nav-links {
+                flex-direction: row;
+                gap: 2rem;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            nav { padding: 1.5rem 4rem; }
+        }
+
+        /* HERO - MOBILE FIRST */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            padding-top: 4rem;
+            min-height: 100vh;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem 1.5rem;
+        }
+
+        /* the small "new collection" line */
+        .hero-tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .hero-tag::before {
+            content: '';
+            display: block;
+            width: 2rem;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        /* big heading */
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 8vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+        }
+
+        h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 0.92rem;
+            line-height: 1.8;
+            color: var(--mid);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            max-width: 42ch;
+        }
+
+        /* buttons row */
+        .hero-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        /* dark filled button */
+        .btn-primary {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 1rem 2rem;
+            background: var(--charcoal);
+            color: var(--warm-white);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.25s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        /* button with arrow now */
+        .btn-ghost {
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--mid);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: color 0.2s;
+        }
+
+        .btn-ghost:hover { color: var(--charcoal); }
+
+        .btn-ghost::after {
+            content: '→';
+            transition: transform 0.2s;
+        }
+
+        .btn-ghost:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* right-side (the image area) */
+        .hero-right {
+            position: relative;
+            background: var(--cream);
+            min-height: 300px;
+        }
+
+        .hero-visual {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            background: linear-gradient(145deg, #ede5db 0%, #d4c9b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .sofa-svg {
+            width: 80%;
+            max-width: 400px;
+            opacity: 0.2;
+        }
+
+        /* 25 years badge */
+        .hero-badge {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            background: var(--charcoal);
+            color: var(--warm-white);
+            padding: 1rem 1.2rem;
+        }
+
+        .hero-badge-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 0.2rem;
+        }
+
+        .hero-badge-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+        }
+
+        /* tablet */
+        @media (min-width: 768px) {
+            .hero-left {
+                padding: 4rem 3rem;
+            }
+            .hero-actions {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        /* desktop */
+        @media (min-width: 1100px) {
+            .hero {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                flex-direction: unset;
+            }
+            .hero-left {
+                padding: 6rem 4rem 6rem 6rem;
+            }
+            .hero-right {
+                min-height: unset;
+            }
+            .hero-visual {
+                min-height: unset;
+            }
+        }
+
+        /* MARQUEE */
+        .marquee-wrap {
+            background: var(--charcoal);
+            overflow: hidden;        /* hides text outside the visible area */
+            padding: 1rem 0;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 3rem;
+            white-space: nowrap;     /* stops items wrapping to next line */
+            animation: marquee 22s linear infinite;
+        }
+
+        .marquee-item {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--accent-light);
+            letter-spacing: 0.08em;
+            flex-shrink: 0;          /* stops items getting squished */
+        }
+
+        .marquee-dot {
+            color: var(--accent);
+            margin: 0 0.5rem;
+        }
+
+        /* the actual animation */
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        /* categories section now */
+        .section {
+            padding: 4rem 1.5rem;
+        }
+
+        /* Browse Label */
+        .section-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 2rem;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 300;
+            line-height: 1.15;
+            margin-bottom: 2.5rem;
+            color: var(--charcoal);
+        }
+
+        h2 em { font-style: italic; }
+
+        /* mobile - single column stack */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .cat-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            height: 220px;
+        }
+
+        .cat-bg {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s ease;
+        }
+
+        /* zoom in on hover */
+        .cat-card:hover .cat-bg {
+            transform: scale(1.04);
+        }
+
+        .cat-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(28,26,23,0.6) 0%, transparent 60%);
+        }
+
+        /* text pinned to bottom side of the card */
+        .cat-info {
+            position: absolute;
+            bottom: 1.2rem;
+            left: 1.2rem;
+            right: 1.2rem;
+            color: var(--warm-white);
+        }
+
+        .cat-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-bottom: 0.2rem;
+        }
+
+        .cat-count {
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            opacity: 0.75;
+        }
+
+        .cat-arrow {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 2rem;
+            height: 2rem;
+            background: rgba(250,248,244,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .cat-card:hover .cat-arrow {
+            background: var(--accent);
+            transform: translate(2px, -2px);
+        }
+
+        /* category photos */
+        .c-sofa {
+            background: linear-gradient(135deg, #C9B8A1, #A08060); /* need to add photos */
+            background-image: url('images/sofa.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .c-bedroom {
+            background: linear-gradient(135deg, #B5C4C1, #7A9E9B); /* need to add photos */
+            background-image: url('images/bedroom.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .c-dining {
+            background: linear-gradient(135deg, #C4AE8B, #896E4A); /* need to add photos */
+            background-image: url('images/dining.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .c-garden {
+            background: linear-gradient(135deg, #A8BC99, #6B8F5A); /* need to add photos */
+            background-image: url('images/garden.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .c-office {
+            background: linear-gradient(135deg, #B8B0C4, #776F8F); /* need to add photos */
+            background-image: url('images/office.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* tablet or up */
+        @media (min-width: 768px) {
+            .section {
+                padding: 5rem 3rem;
+            }
+            .categories-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 240px 240px;
+            }
+            /* living room spans full width */
+            .cat-card.tall {
+                grid-column: span 2;
+            }
+        }
+
+        /* desktop */
+        @media (min-width: 1100px) {
+            .section {
+                padding: 7rem 6rem;
+            }
+            .categories-grid {
+                grid-template-columns: 2fr 1fr 1fr;
+                grid-template-rows: 280px 280px;
+            }
+            /* living room spanning rows not columns */
+            .cat-card.tall {
+                grid-column: unset;
+                grid-row: span 2;
+                height: 100%;        /* ← fixed - was nested wrong */
+            }
+            .cat-card.tall .cat-bg {
+                height: 100%;        /* ← fixed - was nested wrong */
+            }
+        }
+
+        /* FEATURED PRODUCTS */
+
+        /* slightly different background to separate it visually */
+        .featured {
+            background: var(--cream);
+        }
+
+        /* mobile - single column */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .product-card {
+            cursor: pointer;
+        }
+
+        /* the image box */
+        .product-img {
+            aspect-ratio: 3/4;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        /* placeholder colors until real product photos */
+        .p1 { background: linear-gradient(145deg, #d6cbbe, #b0987a); }
+        .p2 { background: linear-gradient(145deg, #c4cecc, #879fa0); }
+        .p3 { background: linear-gradient(145deg, #cabfab, #8d7156); }
+
+        .product-img-fill {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s ease;
+        }
+
+        /* zoom on hover */
+        .product-card:hover .product-img-fill {
+            transform: scale(1.05);
+        }
+
+        /* "Bestseller" tag - top left */
+        .product-tag {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            background: var(--charcoal);
+            color: var(--warm-white);
+            padding: 0.3rem 0.7rem;
+        }
+
+        /* heart icon - top right */
+        .product-wishlist {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 2rem;
+            height: 2rem;
+            background: var(--warm-white);
+            border: 1px solid var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .product-wishlist:hover {
+            background: var(--charcoal);
+            color: white;
+        }
+
+        /* small category label */
+        .product-cat {
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 0.4rem;
+        }
+
+        /* product name */
+        .product-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 0.8rem;
+        }
+
+        /* price and view link on same row */
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            color: var(--accent);
+        }
+
+        /* "View →" link */
+        .product-link {
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--mid);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .product-link:hover { color: var(--charcoal); }
+
+        /* ::after adds the arrow without it being in HTML */
+        .product-link::after {
+            content: '→';
+        }
+
+        /* tablet - 2 columns */
+        @media (min-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* desktop - 3 columns */
+        @media (min-width: 1100px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        /* FOOTER */
+footer {
+    background: #141210;
+    color: rgba(250,248,244,0.5);
+    padding: 4rem 1.5rem 2rem;
+}
+
+/* mobile - everything stacked */
+.footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* brand column - logo + tagline */
+.footer-brand .logo {
+    color: var(--warm-white);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.footer-brand p {
+    font-size: 0.82rem;
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 28ch;
+}
+
+/* each link column */
+.footer-col h4 {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    margin-bottom: 1.2rem;
+    font-weight: 400;
+}
+
+.footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.footer-col ul li a {
+    font-size: 0.82rem;
+    color: rgba(250,248,244,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 300;
+}
+
+.footer-col ul li a:hover {
+    color: var(--accent-light);
+}
+
+/* address block */
+.footer-addr {
+    font-size: 0.78rem;
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+/* copyright bar */
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+}
+
+/* tablet - 2 columns */
+@media (min-width: 768px) {
+    footer {
+        padding: 4rem 3rem 2rem;
+    }
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+    }
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+/* desktop - 4 columns */
+@media (min-width: 1100px) {
+    footer {
+        padding: 4rem 6rem 2rem;
+    }
+    .footer-top {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+}
+/* SETTINGS PANEL */
+
+/* floating gear button */
+.settings-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 200;
+    background: var(--charcoal);
+    color: var(--warm-white);
+    border: none;
+    padding: 0.7rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.settings-btn:hover { background: var(--accent); }
+
+/* dark overlay */
+.settings-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 300;
+}
+
+.settings-overlay.open { display: block; }
+
+/* the sliding panel */
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: -420px;       /* hidden off screen to the right */
+    width: 400px;
+    height: 100vh;
+    background: var(--warm-white);
+    z-index: 400;
+    transition: right 0.35s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+}
+
+/* when open class added, slides in */
+.settings-panel.open {
+    right: 0;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--light);
+}
+
+.settings-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+.settings-close {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: var(--mid);
+    transition: color 0.2s;
+}
+
+.settings-close:hover { color: var(--charcoal); }
+
+/* scrollable body */
+.settings-body {
+    overflow-y: auto;
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.settings-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.settings-title {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(196,189,180,0.4);
+}
+
+/* each image slot row */
+.img-slot {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* mini preview box */
+.img-preview {
+    width: 70px;
+    height: 55px;
+    background: var(--cream);
+    border: 1px solid var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: var(--mid);
+    text-align: center;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* the choose image button */
+.img-upload-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--light);
+    cursor: pointer;
+    color: var(--mid);
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.img-upload-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* reset button */
+.settings-clear {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.7rem;
+    background: none;
+    border: 1px solid rgba(196,189,180,0.5);
+    color: var(--mid);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: auto;
+}
+
+.settings-clear:hover {
+    border-color: #c0392b;
+    color: #c0392b;
+}
+
+    </style>
+</head>
+
+<body>
+<!-- settings button - fixed to corner -->
+<button class="settings-btn" id="settingsBtn">⚙ Settings</button>
+
+<!-- admin settings panel -->
+<div class="settings-panel" id="settingsPanel">
+
+    <div class="settings-header">
+        <h3>Image Settings</h3>
+        <button class="settings-close" id="settingsClose">✕</button>
+    </div>
+
+    <div class="settings-body">
+
+        <!-- hero image slot -->
+        <div class="settings-section">
+            <p class="settings-title">Hero Image</p>
+            <div class="img-slot" data-target="hero">
+                <div class="img-preview" id="preview-hero">Hero</div>
+                <label class="img-upload-btn">
+                    Choose Image
+                    <input type="file" accept="image/*" data-key="hero" class="img-input" hidden>
+                </label>
+            </div>
+        </div>
+
+        <!-- category image slots -->
+        <div class="settings-section">
+            <p class="settings-title">Category Images</p>
+
+            <div class="img-slot" data-target="sofa">
+                <div class="img-preview" id="preview-sofa">Living Room</div>
+                <label class="img-upload-btn">
+                    Choose Image
+                    <input type="file" accept="image/*" data-key="sofa" class="img-input" hidden>
+                </label>
+            </div>
+
+            <div class="img-slot" data-target="bedroom">
+                <div class="img-preview" id="preview-bedroom">Bedroom</div>
+                <label class="img-upload-btn">
+                    Choose Image
+                    <input type="file" accept="image/*" data-key="bedroom" class="img-input" hidden>
+                </label>
+            </div>
+
+            <div class="img-slot" data-target="dining">
+                <div class="img-preview" id="preview-dining">Dining</div>
+                <label class="img-upload-btn">
+                    Choose Image
+                    <input type="file" accept="image/*" data-key="dining" class="img-input" hidden>
+                </label>
+            </div>
+
+            <div class="img-slot" data-target="garden">
+                <div class="img-preview" id="preview-garden">Garden</div>
+                <label class="img-upload-btn">
+                    Choose Image
+                    <input type="file" accept="image/*" data-key="garden" class="img-input" hidden>
+                </label>
+            </div>
+
+            <div class="img-slot" data-target="office">
+                <div class="img-preview" id="preview-office">Commercial</div>
+                <label class="img-upload-btn">
+                    Choose Image
+                    <input type="file" accept="image/*" data-key="office" class="img-input" hidden>
+                </label>
+            </div>
+
+        </div>
+
+        <!-- product image slots -->
+        <div class="settings-section">
+            <p class="settings-title">Product Images</p>
+
+            <div class="img-slot" data-target="p1">
+                <div class="img-preview" id="preview-p1">Sofa Product</div>
+                <label class="img-upload-btn">
+                    Choose Image
+                    <input type="file" accept="image/*" data-key="p1" class="img-input" hidden>
+                </label>
+            </div>
+
+            <div class="img-slot" data-target="p2">
+                <div class="img-preview" id="preview-p2">Dining Product</div>
+                <label class="img-upload-btn">
+                    Choose Image
+                    <input type="file" accept="image/*" data-key="p2" class="img-input" hidden>
+                </label>
+            </div>
+
+            <div class="img-slot" data-target="p3">
+                <div class="img-preview" id="preview-p3">Chair Product</div>
+                <label class="img-upload-btn">
+                    Choose Image
+                    <input type="file" accept="image/*" data-key="p3" class="img-input" hidden>
+                </label>
+            </div>
+
+        </div>
+
+        <button class="settings-clear" id="settingsClear">Reset All Images</button>
+
+    </div>
+</div>
+
+<!-- dark overlay behind panel -->
+<div class="settings-overlay" id="settingsOverlay"></div>
+    <nav>
+        <a href="#" class="logo">Milan <span>Furniture</span></a>
+        <button class="nav-toggle" id="navToggle">☰</button>
+        <div class="nav-menu" id="navMenu">
+            <ul class="nav-links">
+                <li><a href="#">Living Room</a></li>
+                <li><a href="#">Bedroom</a></li>
+                <li><a href="#">Dining</a></li>
+                <li><a href="#">Commercial</a></li>
+                <li><a href="#">Garden</a></li>
+            </ul>
+            <a href="#" class="nav-btn">Visit Showroom</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-left">
+            <div class="hero-tag">New Collection 2025</div>
+            <h1>Furniture<br>crafted for<br><em>real living</em></h1>
+            <p class="hero-desc">Premium furniture for every room - from handcrafted solid wood pieces to modern office solutions. Bharuch's most trusted home furnishing destination since 1998.</p>
+            <div class="hero-actions">
+                <a href="#" class="btn-primary">Explore Collection</a>
+                <a href="#" class="btn-ghost">Our Showroom</a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-visual">
+                <svg class="sofa-svg" viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="60" y="180" width="480" height="110" rx="8" fill="#6b5a42"/>
+                    <rect x="40" y="140" width="100" height="110" rx="10" fill="#7A6650"/>
+                    <rect x="460" y="140" width="100" height="110" rx="10" fill="#7A6650"/>
+                    <rect x="120" y="100" width="360" height="120" rx="12" fill="#8B7056"/>
+                    <rect x="120" y="248" width="40" height="32" rx="4" fill="#5A4A36"/>
+                    <rect x="440" y="248" width="40" height="32" rx="4" fill="#5A4A36"/>
+                    <rect x="200" y="248" width="40" height="32" rx="4" fill="#5A4A36"/>
+                    <rect x="360" y="248" width="40" height="32" rx="4" fill="#5A4A36"/>
+                </svg>
+                <div class="hero-badge">
+                    <div class="hero-badge-num">25+</div>
+                    <div class="hero-badge-label">Years of Craft</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <span class="marquee-item">Solid Sheesham Wood<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Handcrafted Pieces<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Living Room<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Office Furniture<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Garden Collection<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Bedroom Sets<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Free Delivery<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Bharuch Showroom<span class="marquee-dot">✦</span></span>
+            <!-- duplicate set - needed for seamless loop -->
+            <span class="marquee-item">Solid Sheesham Wood<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Handcrafted Pieces<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Living Room<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Office Furniture<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Garden Collection<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Bedroom Sets<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Free Delivery<span class="marquee-dot">✦</span></span>
+            <span class="marquee-item">Bharuch Showroom<span class="marquee-dot">✦</span></span>
+        </div>
+    </div>
+
+    <!-- categories section -->
+    <section class="section">
+        <div class="section-label">Browse</div>
+        <h2>Shop by <em>category</em></h2>
+        <div class="categories-grid">
+
+            <div class="cat-card tall">
+                <div class="cat-bg c-sofa"></div>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                    <div class="cat-name">Living Room</div>
+                    <div class="cat-count">Sofas · Center Tables · TV Units</div>
+                </div>
+                <div class="cat-arrow">→</div>
+            </div>
+
+            <div class="cat-card">
+                <div class="cat-bg c-bedroom"></div>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                    <div class="cat-name">Bedroom</div>
+                    <div class="cat-count">Beds · Wardrobes</div>
+                </div>
+                <div class="cat-arrow">→</div>
+            </div>
+
+            <div class="cat-card">
+                <div class="cat-bg c-dining"></div>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                    <div class="cat-name">Dining</div>
+                    <div class="cat-count">Tables · Chairs · Sets</div>
+                </div>
+                <div class="cat-arrow">→</div>
+            </div>
+
+            <div class="cat-card">
+                <div class="cat-bg c-garden"></div>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                    <div class="cat-name">Garden</div>
+                    <div class="cat-count">Outdoor Sets · Patio</div>
+                </div>
+                <div class="cat-arrow">→</div>
+            </div>
+
+            <div class="cat-card">
+                <div class="cat-bg c-office"></div>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                    <div class="cat-name">Commercial</div>
+                    <div class="cat-count">Tables · Chairs · Storage</div>
+                </div>
+                <div class="cat-arrow">→</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Featured -->
+    <section class="section featured">
+        <div class="section-label">Handpicked</div>
+        <h2>Featured <em>pieces</em></h2>
+        <div class="products-grid">
+
+            <div class="product-card">
+                <div class="product-img">
+                    <div class="product-img-fill p1"></div>
+                    <div class="product-tag">Bestseller</div>
+                    <div class="product-wishlist">♡</div>
+                </div>
+                <div class="product-cat">Sofa · Living Room</div>
+                <div class="product-name">Seymour Sectional Sofa</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹ 45,000</div>
+                    <a href="#" class="product-link">View</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img">
+                    <div class="product-img-fill p2"></div>  <!-- fixed: was product-img-filled -->
+                    <div class="product-tag">New Arrival</div>
+                    <div class="product-wishlist">♡</div>
+                </div>
+                <div class="product-cat">Dining · Solid Wood</div>
+                <div class="product-name">LongWell Dining Table</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹ 28,500</div>
+                    <a href="#" class="product-link">View</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img">             <!-- fixed: removed nested product-img -->
+                    <div class="product-img-fill p3"></div>
+                    <div class="product-tag">Premium</div>
+                    <div class="product-wishlist">♡</div>
+                </div>
+                <div class="product-cat">Office · Executive</div>   <!-- fixed: moved outside product-img -->
+                <div class="product-name">Executive Recliner Chair</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹ 18,200</div>
+                    <a href="#" class="product-link">View</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- FOOTER -->
+<footer>
+    <div class="footer-top">
+
+        <!-- brand column -->
+        <div class="footer-brand">
+            <a href="#" class="logo">Milan <span>Furniture</span></a>
+            <p>Gujarat's trusted destination for premium home and office furniture since 1998.</p>
+        </div>
+
+        <!-- shop links -->
+        <div class="footer-col">
+            <h4>Shop</h4>
+            <ul>
+                <li><a href="#">Living Room</a></li>
+                <li><a href="#">Bedroom</a></li>
+                <li><a href="#">Dining</a></li>
+                <li><a href="#">Garden</a></li>
+                <li><a href="#">Commercial</a></li>
+            </ul>
+        </div>
+
+        <!-- info links -->
+        <div class="footer-col">
+            <h4>Info</h4>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Our Brands</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Delivery Policy</a></li>
+            </ul>
+        </div>
+
+        <!-- contact -->
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <div class="footer-addr">
+                G-3 & 4, Aditya Complex<br>
+                Kasak Circle, Bharuch<br>
+                Gujarat, India<br><br>
+                +91 2642 229666<br>
+                +91 2642 248777
+            </div>
+        </div>
+
+    </div>
+
+    <!-- bottom bar -->
+    <div class="footer-bottom">
+        <span>© 2025 Milan Furniture. All rights reserved.</span>
+        <span>Designed in Gujarat, India</span>
+    </div>
+</footer>
+
+    <script>
+    /* hamburger menu */
+    const toggle = document.getElementById('navToggle');
+    const menu = document.getElementById('navMenu');
+    toggle.addEventListener('click', function() {
+        menu.classList.toggle('open');
+    });
+
+    /* settings panel open/close */
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsPanel = document.getElementById('settingsPanel');
+    const settingsClose = document.getElementById('settingsClose');
+    const settingsOverlay = document.getElementById('settingsOverlay');
+
+    settingsBtn.addEventListener('click', function() {
+        settingsPanel.classList.add('open');
+        settingsOverlay.classList.add('open');
+    });
+
+    function closeSettings() {
+        settingsPanel.classList.remove('open');
+        settingsOverlay.classList.remove('open');
+    }
+
+    settingsClose.addEventListener('click', closeSettings);
+    settingsOverlay.addEventListener('click', closeSettings);
+
+    /* image upload logic */
+    const inputs = document.querySelectorAll('.img-input');
+
+    inputs.forEach(function(input) {
+        input.addEventListener('change', function() {
+            const key = this.getAttribute('data-key');
+            const file = this.files[0];
+
+            if (!file) return;
+
+            /* read the file as a base64 string */
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+
+                /* save to localStorage so it persists on refresh */
+                localStorage.setItem('img-' + key, imageData);
+
+                /* apply the image */
+                applyImage(key, imageData);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    });
+
+    /* applies image to the right element on the page */
+    function applyImage(key, imageData) {
+
+        /* hero image */
+        if (key === 'hero') {
+            const heroVisual = document.querySelector('.hero-visual');
+            if (heroVisual) {
+                heroVisual.style.backgroundImage = 'url(' + imageData + ')';
+                heroVisual.style.backgroundSize = 'cover';
+                heroVisual.style.backgroundPosition = 'center';
+                /* hide the SVG sofa when a real image is set */
+                const sofaSvg = document.querySelector('.sofa-svg');
+                if (sofaSvg) sofaSvg.style.display = 'none';
+            }
+            return;
+        }
+
+        /* update the mini preview in settings */
+        const preview = document.getElementById('preview-' + key);
+        if (preview) {
+            preview.style.backgroundImage = 'url(' + imageData + ')';
+            preview.textContent = '';
+        }
+
+        /* category cards */
+        const catBg = document.querySelector('.c-' + key);
+        if (catBg) {
+            catBg.style.backgroundImage = 'url(' + imageData + ')';
+        }
+
+        /* product cards */
+        const productBg = document.querySelector('.product-img-fill.' + key);
+        if (productBg) {
+            productBg.style.backgroundImage = 'url(' + imageData + ')';
+            productBg.style.backgroundSize = 'cover';
+            productBg.style.backgroundPosition = 'center';
+        }
+    }
+
+    /* on page load, restore any saved images from localStorage */
+    const keys = ['hero', 'sofa', 'bedroom', 'dining', 'garden', 'office', 'p1', 'p2', 'p3'];
+
+    keys.forEach(function(key) {
+        const saved = localStorage.getItem('img-' + key);
+        if (saved) {
+            applyImage(key, saved);
+        }
+    });
+
+    /* reset all images */
+    document.getElementById('settingsClear').addEventListener('click', function() {
+        keys.forEach(function(key) {
+            localStorage.removeItem('img-' + key);
+
+            /* clear hero */
+            if (key === 'hero') {
+                const heroVisual = document.querySelector('.hero-visual');
+                if (heroVisual) heroVisual.style.backgroundImage = '';
+                const sofaSvg = document.querySelector('.sofa-svg');
+                if (sofaSvg) sofaSvg.style.display = '';
+                return;
+            }
+
+            /* clear previews */
+            const preview = document.getElementById('preview-' + key);
+            if (preview) {
+                preview.style.backgroundImage = '';
+                preview.textContent = key;
+            }
+
+            /* clear category cards */
+            const catBg = document.querySelector('.c-' + key);
+            if (catBg) {
+                catBg.style.backgroundImage = '';
+            }
+
+            /* clear product cards */
+            const productBg = document.querySelector('.product-img-fill.' + key);
+            if (productBg) {
+                productBg.style.backgroundImage = '';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
