@@ -30,6 +30,7 @@
         :root {
             --cream: #f5f0e8;
             --warm-white: #faf8f4;
+            --page-bg: #f2ead9;
             --charcoal: #1c1a17;
             --mid: #6b6560;
             --light: #c4bdb4;
@@ -41,7 +42,7 @@
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background: var(--warm-white);
+            background: var(--page-bg);
             color: var(--charcoal);
             overflow-x: hidden;
         }
@@ -57,7 +58,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.2rem 1.5rem;
-            background: rgba(250,248,244,0.95);
+            background: rgba(242,234,217,0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(196,189,180,0.3);
         }
@@ -528,6 +529,11 @@
         /* mobile - single column stack */
         .categories-grid {
             display: grid;
+            gap: 0.8rem;
+        }
+
+        .categories-secondary {
+            display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0.8rem;
         }
@@ -536,11 +542,10 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            height: 160px;
+            aspect-ratio: 4 / 3;
         }
         .cat-card.tall{
-            grid-column: span 2;
-            height: 240px;
+            aspect-ratio: 16 / 9;
         }
 
         .cat-bg {
@@ -571,9 +576,15 @@
 
         .cat-name {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 4rem;
+            font-size: 1.4rem; 
             font-weight: 300;
             margin-bottom: 0.2rem;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            letter-spacing: 0.06em;
+        }
+        /*living room is tall card - bigger font on all sizes */
+        .cat-card.tall .cat-name{
+            font-size: 2.4rem;
         }
 
         .cat-count {
@@ -644,14 +655,6 @@
             .section {
                 padding: 5rem 3rem;
             }
-            .categories-grid {
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: 240px 240px;
-            }
-            /* living room spans full width */
-            .cat-card.tall {
-                grid-column: span 2;
-            }
         }
 
         /* desktop */
@@ -660,13 +663,22 @@
                 padding: 7rem 6rem;
             }
             .categories-grid {
-                grid-template-columns: 2fr 1fr 1fr;
-                grid-template-rows: 280px 280px;
+                grid-template-columns: 1.05fr 1fr;
+                align-items: stretch;
             }
-            /* living room spanning rows not columns */
+
+            .categories-secondary {
+                grid-template-rows: repeat(2, minmax(0, 1fr));
+            }
+
+            .categories-secondary .cat-card {
+                aspect-ratio: auto;
+                height: 100%;
+            }
+            /* living room feature card */
             .cat-card.tall {
-                grid-column: unset;
-                grid-row: span 2;
+                aspect-ratio: auto;
+                min-height: 640px;
                 height: 100%;        /* ← fixed - was nested wrong */
             }
             .cat-card.tall .cat-bg {
@@ -1487,7 +1499,7 @@ footer {
 
 /* CONTACT SECTION */
 .contact{
-    background: var(--warm-white);
+    background: var(--page-bg);
 }
 
 .contact-inner {
@@ -1693,6 +1705,7 @@ footer {
                     <input type="file" accept="image/*" data-key="office" class="img-input" hidden>
                 </label>
             </div>
+            </div>
 
         </div>
 
@@ -1873,6 +1886,7 @@ footer {
                 <div class="cat-arrow">→</div>
             </div>
 
+            <div class="categories-secondary">
             <div class="cat-card">
                 <div class="cat-bg c-bedroom"></div>
                 <div class="cat-overlay"></div>
@@ -1914,56 +1928,15 @@ footer {
             </div>
 
         </div>
+        </div>
     </section>
 
     <!-- Featured -->
     <section class="section featured" id="products">
         <div class="section-label">Handpicked</div>
         <h2>Featured <em>pieces</em></h2>
-        <div class="products-grid">
-
-            <div class="product-card">
-                <div class="product-img">
-                    <div class="product-img-fill p1"></div>
-                    <div class="product-tag">Bestseller</div>
-                    <div class="product-wishlist">♡</div>
-                </div>
-                <div class="product-cat">Sofa · Living Room</div>
-                <div class="product-name">Seymour Sectional Sofa</div>
-                <div class="product-bottom">
-                    <div class="product-price">₹ 45,000</div>
-                    <a href="#" class="product-link">View</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-img">
-                    <div class="product-img-fill p2"></div>  <!-- fixed: was product-img-filled -->
-                    <div class="product-tag">New Arrival</div>
-                    <div class="product-wishlist">♡</div>
-                </div>
-                <div class="product-cat">Dining · Solid Wood</div>
-                <div class="product-name">LongWell Dining Table</div>
-                <div class="product-bottom">
-                    <div class="product-price">₹ 28,500</div>
-                    <a href="#" class="product-link">View</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-img">             <!-- fixed: removed nested product-img -->
-                    <div class="product-img-fill p3"></div>
-                    <div class="product-tag">Premium</div>
-                    <div class="product-wishlist">♡</div>
-                </div>
-                <div class="product-cat">Office · Executive</div>   <!-- fixed: moved outside product-img -->
-                <div class="product-name">Executive Recliner Chair</div>
-                <div class="product-bottom">
-                    <div class="product-price">₹ 18,200</div>
-                    <a href="#" class="product-link">View</a>
-                </div>
-            </div>
-
+        <div class="products-grid" id="productsGrid">
+            <!-- products load here from the database -->
         </div>
     </section>
 
@@ -2234,31 +2207,66 @@ footer {
     settingsOverlay.addEventListener('click', closeSettings);
 
     /* image upload logic */
-    const inputs = document.querySelectorAll('.img-input');
+/* image upload logic */
+const inputs = document.querySelectorAll('.img-input');
 
-    inputs.forEach(function(input) {
-        input.addEventListener('change', function() {
-            const key = this.getAttribute('data-key');
-            const file = this.files[0];
+function resizeImage(file, callback) {
+    const imageUrl = URL.createObjectURL(file);
+    const img = new Image();
 
-            if (!file) return;
+    img.onload = function() {
+        const maxSize = 1400;
+        let width = img.width;
+        let height = img.height;
 
-            /* read the file as a base64 string */
-            const reader = new FileReader();
+        if (width > height && width > maxSize) {
+            height = Math.round((height * maxSize) / width);
+            width = maxSize;
+        } else if (height > maxSize) {
+            width = Math.round((width * maxSize) / height);
+            height = maxSize;
+        }
 
-            reader.onload = function(e) {
-                const imageData = e.target.result;
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
 
-                /* save to localStorage so it persists on refresh */
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const imageData = canvas.toDataURL('image/jpeg', 0.82);
+
+        URL.revokeObjectURL(imageUrl);
+        callback(imageData);
+    };
+
+    img.onerror = function() {
+        URL.revokeObjectURL(imageUrl);
+        alert('Could not load this image. Try a JPG, PNG, or WebP file.');
+    };
+
+    img.src = imageUrl;
+}
+
+inputs.forEach(function(input) {
+    input.addEventListener('change', function() {
+        const key = this.getAttribute('data-key');
+        const file = this.files[0];
+
+        if (!file) return;
+
+        resizeImage(file, function(imageData) {
+            applyImage(key, imageData);
+
+            try {
                 localStorage.setItem('img-' + key, imageData);
-
-                /* apply the image */
-                applyImage(key, imageData);
-            };
-
-            reader.readAsDataURL(file);
+            } catch (error) {
+                console.warn('Image was applied, but it was too large to save:', key, error);
+                alert('This image is too large to save. Try a smaller image.');
+            }
         });
     });
+});
 
     /* applies image to the right element on the page */
     function applyImage(key, imageData) {
@@ -2387,6 +2395,63 @@ footer {
 
     /* only run on mobile */
         startTestiSlider();
+</script>
+
+<!-- load products from the backend -->
+<script>
+  const API_URL = 'http://localhost:5000/api/products';
+  const productsGrid = document.getElementById('productsGrid');
+
+  function escapeHTML(value) {
+    return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+  }
+  
+function productCard(p) {
+  const price = '₹ ' + Number(p.price || 0).toLocaleString('en-IN');
+
+  const imageUrl = escapeHTML(p.imageUrl);
+  const image = imageUrl
+    ? `<div class="product-img-fill" style="background-image:url('${imageUrl}');background-size:cover;background-position:center;"></div>`
+    : `<div class="product-img-fill p1"></div>`;
+
+  const tag = p.tag
+    ? `<div class="product-tag">${escapeHTML(p.tag)}</div>`
+    : '';
+
+  return `
+    <div class="product-card">
+      <div class="product-img">
+        ${image}
+        ${tag}
+        <div class="product-wishlist">♡</div>
+      </div>
+      <div class="product-cat">${escapeHTML(p.category)}</div>
+      <div class="product-name">${escapeHTML(p.name)}</div>
+      <div class="product-bottom">
+        <div class="product-price">${price}</div>
+        <a href="#" class="product-link">View</a>
+      </div>
+    </div>`;
+}
+
+  async function loadProducts() {
+    try {
+      const res = await fetch(API_URL);
+      const products = await res.json();
+      const featured = products.filter(p => p.featured);
+      productsGrid.innerHTML = featured.map(productCard).join('');
+    } catch (err) {
+      console.error('Could not load products:', err);
+      productsGrid.innerHTML = '<p style="color:var(--mid)">Could not load products right now.</p>';
+    }
+  }
+
+  loadProducts();
 </script>
 
 </body>
